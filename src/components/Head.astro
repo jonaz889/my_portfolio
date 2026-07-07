@@ -87,22 +87,14 @@ const { title, description, image = "/nano.png" } = Astro.props;
     const backToPrev = document.getElementById("back-to-prev");
     backToPrev?.addEventListener("click", () => window.history.back());
 
-    const lightThemeButton = document.getElementById("light-theme-button");
-    lightThemeButton?.addEventListener("click", () => {
-      localStorage.setItem("theme", "light");
-      toggleTheme(false);
-    });
+    const themeToggleButton = document.getElementById("theme-toggle-button");
 
-    const darkThemeButton = document.getElementById("dark-theme-button");
-    darkThemeButton?.addEventListener("click", () => {
-      localStorage.setItem("theme", "dark");
-      toggleTheme(true);
-    });
+    themeToggleButton?.addEventListener("click", () => {
+      const isDark = document.documentElement.classList.contains("dark");
+      const nextTheme = isDark ? "light" : "dark";
 
-    const systemThemeButton = document.getElementById("system-theme-button");
-    systemThemeButton?.addEventListener("click", () => {
-      localStorage.setItem("theme", "system");
-      toggleTheme(window.matchMedia("(prefers-color-scheme: dark)").matches);
+      localStorage.setItem("theme", nextTheme);
+      toggleTheme(nextTheme === "dark");
     });
 
     window.matchMedia("(prefers-color-scheme: dark)")
@@ -166,8 +158,27 @@ function toggleTheme(dark) {
       document.documentElement.classList.remove("dark");
     }
 
-  window.getComputedStyle(css).opacity;
+    window.getComputedStyle(css).opacity;
     document.head.removeChild(css);
+
+    updateThemeIcon();
+  }
+
+  function updateThemeIcon() 
+  {
+    const isDark = document.documentElement.classList.contains("dark");
+
+    const moonIcon = document.getElementById("theme-icon-moon");
+    const sunIcon = document.getElementById("theme-icon-sun");
+    const themeToggleButton = document.getElementById("theme-toggle-button");
+
+    moonIcon?.classList.toggle("hidden", isDark);
+    sunIcon?.classList.toggle("hidden", !isDark);
+
+    themeToggleButton?.setAttribute(
+      "aria-label",
+      isDark ? "Switch to light theme" : "Switch to dark theme"
+    );
   }
 
   function preloadTheme() {

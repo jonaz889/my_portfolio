@@ -1,0 +1,68 @@
+---
+import PageLayout from "@layouts/PageLayout.astro";
+import Container from "@components/Container.astro";
+---
+
+<PageLayout
+  title="CV | Jonas H. Møller"
+  description="View and download the CV of Jonas H. Møller"
+>
+  <Container>
+    <section class="animate space-y-6">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <h1 class="text-4xl font-semibold text-black dark:text-white">
+            CV
+          </h1>
+          <p class="mt-2">
+            View or download my CV.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap gap-3">
+          <a
+            href="/cv.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="rounded-full border-2 border-black/30 px-5 py-2 font-medium text-black transition-all duration-300 hover:border-black/70 hover:bg-black hover:text-white dark:border-white/30 dark:text-white dark:hover:border-white dark:hover:bg-white dark:hover:text-black"
+          >
+            Open CV
+          </a>
+
+          <a
+            href="/cv.pdf"
+            download
+            class="rounded-full border-2 border-black/30 px-5 py-2 font-medium text-black transition-all duration-300 hover:border-black/70 hover:bg-black hover:text-white dark:border-white/30 dark:text-white dark:hover:border-white dark:hover:bg-white dark:hover:text-black"
+          >
+            Download CV
+          </a>
+        </div>
+      </div>
+    </section>
+  </Container>
+
+  <section class="animate mx-auto mt-8 w-full max-w-6xl px-4">
+    <div class="h-[85vh] overflow-hidden rounded-2xl border border-black/10 dark:border-white/10">
+      <object
+        data="/cv.pdf#view=FitH"
+        type="application/pdf"
+        class="h-full w-full"
+      >
+        <div class="flex h-full flex-col items-center justify-center gap-4 p-8 text-center">
+          <p>
+            Your browser cannot display the PDF inline.
+          </p>
+
+          <a
+            href="/cv.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="rounded-full border-2 border-black/30 px-5 py-2 font-medium text-black transition-all duration-300 hover:border-black/70 hover:bg-black hover:text-white dark:border-white/30 dark:text-white dark:hover:border-white dark:hover:bg-white dark:hover:text-black"
+          >
+            Open CV instead
+          </a>
+        </div>
+      </object>
+    </div>
+  </section>
+</PageLayout>

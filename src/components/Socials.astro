@@ -1,0 +1,75 @@
+---
+// src/components/Socials.astro
+
+import { SOCIALS } from "@consts";
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+
+const iconClass =
+  "size-[2.9rem] transition-colors duration-300 group-hover:text-black group-hover:dark:text-white";
+---
+
+<ul class:list={["flex items-center gap-3", className]}>
+  {SOCIALS.map((social) => {
+    const name = social.NAME.toLowerCase();
+
+    return (
+      <li>
+        <a
+          href={social.HREF}
+          target={social.HREF.startsWith("mailto:") ? undefined : "_blank"}
+          rel={social.HREF.startsWith("mailto:") ? undefined : "noopener noreferrer"}
+          aria-label={social.NAME}
+          class="group flex size-[5rem] items-center justify-center rounded-full border-[.15rem] border-black/25 text-black/70 shadow-sm transition-all duration-300 hover:scale-105 hover:border-black/50 hover:text-black hover:shadow-md dark:border-white/25 dark:text-white/75 dark:hover:border-white/50 dark:hover:text-white"        >
+          {name === "github" && (
+            <svg
+              class={iconClass}
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M12 .5C5.65.5.5 5.65.5 12c0 5.09 3.29 9.4 7.86 10.93.58.11.79-.25.79-.56v-2.02c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.27-1.68-1.27-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.68 1.25 3.33.96.1-.74.4-1.25.73-1.54-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.47.11-3.06 0 0 .97-.31 3.16 1.18A10.9 10.9 0 0 1 12 6.13c.98 0 1.96.13 2.88.39 2.19-1.49 3.15-1.18 3.15-1.18.63 1.59.24 2.77.12 3.06.74.81 1.18 1.84 1.18 3.1 0 4.43-2.7 5.4-5.27 5.69.41.35.78 1.05.78 2.12v3.15c0 .31.21.68.8.56A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"
+              />
+            </svg>
+          )}
+
+          {name === "linkedin" && (
+            <svg
+              class={iconClass}
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.32 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.1 20.45H3.54V9H7.1v11.45ZM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.72V1.72C24 .77 23.21 0 22.23 0Z" />
+            </svg>
+          )}
+
+          {(name === "x" || name === "twitter") && (
+            <svg
+              class={iconClass}
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932L18.901 1.153Zm-1.293 19.492h2.039L6.486 3.24H4.298l13.31 17.405Z" />
+            </svg>
+          )}
+
+          {!["github", "linkedin", "x", "twitter"].includes(name) && (
+            <span class="text-sm">{social.NAME}</span>
+          )}
+        </a>
+      </li>
+    );
+  })}
+</ul>
