@@ -29,16 +29,23 @@ export const PROJECTS: Metadata = {
 };
 
 export const SOCIALS: Socials = [
+  {
+    NAME: "email",
+    HREF: "mailto:s234941@dtu.dk"
+  },
   { 
-    NAME: "x",
-    HREF: "https://twitter.com/jonaz889",
+    NAME: "linkedin",
+    HREF: "https://www.linkedin.com/in/jonashmoller",
   },
   { 
     NAME: "github",
     HREF: "https://github.com/jonaz889"
   },
   { 
-    NAME: "linkedin",
-    HREF: "https://www.linkedin.com/in/jonashmoller",
-  }
+    NAME: "x",
+    HREF: "https://twitter.com/jonaz889",
+  },
+
+
+
 ];
