@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
 import Container from "@components/Container.astro";
 import PageLayout from "@layouts/PageLayout.astro";
 import Link from "@components/Link.astro";
@@ -10,11 +11,6 @@ const projects = (await getCollection("projects"))
   .filter((project) => !project.data.draft)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, SITE.NUM_PROJECTS_ON_HOMEPAGE);
-
-const projectImages = {
-  "astro-nano": "/astro-nano.png",
-  "astro-sphere": "/astro-sphere.jpg",
-};
 ---
 
 <PageLayout title={HOME.TITLE} description={HOME.DESCRIPTION}>
@@ -67,38 +63,42 @@ const projectImages = {
       </div>
 
       <div class="grid gap-6 sm:grid-cols-2">
-        {projects.map((project) => {
-          const image = projectImages[project.id] ?? "/lighthouse.png";
-
-          return (
-            <a
-              href={`/projects/${project.slug}`}
-              class="group overflow-hidden rounded-3xl border border-black/10 bg-stone-100/40 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-black/30 hover:shadow-xl dark:border-white/10 dark:bg-stone-900/40 dark:hover:border-white/30"
-            >
-              <div class="aspect-[16/10] overflow-hidden border-b border-black/10 dark:border-white/10">
-                <img
-                  src={image}
+        {projects.map((project) => (
+          <a
+            href={`/projects/${project.slug}`}
+            class="group overflow-hidden rounded-3xl border border-black/10 bg-stone-100/40 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-black/30 hover:shadow-xl dark:border-white/10 dark:bg-stone-900/40 dark:hover:border-white/30"
+          >
+            <div class="aspect-[16/10] overflow-hidden border-b border-black/10 dark:border-white/10">
+              {project.data.image ? (
+                <Image
+                  src={project.data.image}
                   alt=""
                   class="h-full w-full object-cover opacity-90 transition-all duration-500 group-hover:scale-105 group-hover:opacity-100"
                 />
+              ) : (
+                <img
+                  src="/lighthouse.png"
+                  alt=""
+                  class="h-full w-full object-cover opacity-90 transition-all duration-500 group-hover:scale-105 group-hover:opacity-100"
+                />
+              )}
+            </div>
+
+            <div class="space-y-3 p-5">
+              <h3 class="text-xl font-semibold text-black dark:text-white">
+                {project.data.title}
+              </h3>
+
+              <p class="line-clamp-3 text-sm">
+                {project.data.description}
+              </p>
+
+              <div class="pt-2 text-sm font-medium text-black dark:text-white">
+                View project →
               </div>
-
-              <div class="space-y-3 p-5">
-                <h3 class="text-xl font-semibold text-black dark:text-white">
-                  {project.data.title}
-                </h3>
-
-                <p class="line-clamp-3 text-sm">
-                  {project.data.description}
-                </p>
-
-                <div class="pt-2 text-sm font-medium text-black dark:text-white">
-                  View project →
-                </div>
-              </div>
-            </a>
-          );
-        })}
+            </div>
+          </a>
+        ))}
       </div>
     </section>
   </Container>

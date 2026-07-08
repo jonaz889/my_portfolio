@@ -4,6 +4,7 @@ description: "Portfolio and blog build with astro."
 date: "Jul 8 2026"
 demoURL: "https://jonasmoeller.netlify.app/"
 repoURL: "https://github.com/jonaz889/my_portfolio"
+image: "./cover.png"
 ---
 
 Personal Portfolio Website
