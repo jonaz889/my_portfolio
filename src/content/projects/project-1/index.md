@@ -11,7 +11,7 @@ Personal Portfolio Website
 This website is my personal portfolio and technical home on the web. It is built with Astro, TypeScript, Tailwind CSS, and MDX, using AstroNano by Mark Horn as the initial template.
 
 - [AstroNano template](https://github.com/markhorn-dev/astro-nano)
-- [Preserved MIT license notice](https://github.com/jonaz889/my_portfolio/blob/main/LICENSE-ASTRONANO)
+- [Preserved MIT license notice](https://github.com/jonaz889/my_portfolio/blob/master/LICENSE-ASTRONANO)
 
 I customized the layout, navigation, theme toggle, social links, CV page, and project presentation to better reflect my profile.
 
