@@ -3,8 +3,8 @@ import type { Site, Metadata, Socials } from "@types";
 export const SITE: Site = {
   NAME: "Jonas H. Møller",
   EMAIL: "s234941@dtu.dk",
-  NUM_POSTS_ON_HOMEPAGE: 3,
-  NUM_WORKS_ON_HOMEPAGE: 2,
+  NUM_POSTS_ON_HOMEPAGE: 0,
+  NUM_WORKS_ON_HOMEPAGE: 0,
   NUM_PROJECTS_ON_HOMEPAGE: 3,
 };
 
@@ -30,22 +30,19 @@ export const PROJECTS: Metadata = {
 
 export const SOCIALS: Socials = [
   {
-    NAME: "email",
-    HREF: "mailto:s234941@dtu.dk"
+    NAME: "Email",
+    HREF: "mailto:s234941@dtu.dk",
   },
-  { 
-    NAME: "linkedin",
+  {
+    NAME: "LinkedIn",
     HREF: "https://www.linkedin.com/in/jonashmoller",
   },
-  { 
-    NAME: "github",
-    HREF: "https://github.com/jonaz889"
+  {
+    NAME: "GitHub",
+    HREF: "https://github.com/jonaz889",
   },
-  { 
-    NAME: "x",
+  {
+    NAME: "X",
     HREF: "https://twitter.com/jonaz889",
   },
-
-
-
 ];

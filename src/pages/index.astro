@@ -2,41 +2,23 @@
 import { getCollection } from "astro:content";
 import Container from "@components/Container.astro";
 import PageLayout from "@layouts/PageLayout.astro";
-import ArrowCard from "@components/ArrowCard.astro";
 import Link from "@components/Link.astro";
 import Socials from "@components/Socials.astro";
-import { dateRange } from "@lib/utils";
 import { SITE, HOME } from "@consts";
-
-const blog = (await getCollection("blog"))
-  .filter((post) => !post.data.draft)
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-  .slice(0, SITE.NUM_POSTS_ON_HOMEPAGE);
 
 const projects = (await getCollection("projects"))
   .filter((project) => !project.data.draft)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, SITE.NUM_PROJECTS_ON_HOMEPAGE);
 
-const allwork = (await getCollection("work"))
-  .sort(
-    (a, b) =>
-      new Date(b.data.dateStart).valueOf() -
-      new Date(a.data.dateStart).valueOf()
-  )
-  .slice(0, SITE.NUM_WORKS_ON_HOMEPAGE);
-
-const work = await Promise.all(
-  allwork.map(async (item) => {
-    const { Content } = await item.render();
-    return { ...item, Content };
-  })
-);
+const projectImages = {
+  "astro-nano": "/astro-nano.png",
+  "astro-sphere": "/astro-sphere.jpg",
+};
 ---
 
 <PageLayout title={HOME.TITLE} description={HOME.DESCRIPTION}>
   <Container>
-    <!-- Hero section -->
     <section class="mb-24 text-center">
       <h1 class="animate text-6xl font-semibold tracking-tight text-black dark:text-white">
         Jonas H. Møller
@@ -66,102 +48,58 @@ const work = await Promise.all(
       <Socials class="animate mt-8 w-full justify-center" />
     </section>
 
-    <!-- Main homepage sections -->
-    <div class="space-y-16">
-      <section class="animate space-y-6">
-        <div class="flex flex-wrap items-center justify-between gap-y-2">
-          <h5 class="font-semibold text-black dark:text-white">
-            Latest posts
-          </h5>
+    <section class="animate space-y-8">
+      <div class="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <h2 class="text-3xl font-semibold tracking-tight text-black dark:text-white">
+            Featured Projects
+          </h2>
 
-          <Link href="/blog">
-            See all posts
-          </Link>
-        </div>
-
-        <ul class="flex flex-col gap-4">
-          {blog.map((post) => (
-            <li>
-              <ArrowCard entry={post} />
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <section class="animate space-y-6">
-        <div class="flex flex-wrap items-center justify-between gap-y-2">
-          <h5 class="font-semibold text-black dark:text-white">
-            Work Experience
-          </h5>
-
-          <Link href="/work">
-            See all work
-          </Link>
-        </div>
-
-        <ul class="flex flex-col space-y-4">
-          {work.map((entry) => (
-            <li>
-              <div class="text-sm opacity-75">
-                {dateRange(entry.data.dateStart, entry.data.dateEnd)}
-              </div>
-
-              <div class="font-semibold text-black dark:text-white">
-                {entry.data.company}
-              </div>
-
-              <div class="text-sm opacity-75">
-                {entry.data.role}
-              </div>
-
-              <article>
-                <entry.Content />
-              </article>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <section class="animate space-y-6">
-        <div class="flex flex-wrap items-center justify-between gap-y-2">
-          <h5 class="font-semibold text-black dark:text-white">
-            Recent projects
-          </h5>
-
-          <Link href="/projects">
-            See all projects
-          </Link>
-        </div>
-
-        <ul class="flex flex-col gap-4">
-          {projects.map((project) => (
-            <li>
-              <ArrowCard entry={project} />
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <section class="animate space-y-4">
-        <h5 class="font-semibold text-black dark:text-white">
-          Let's Connect
-        </h5>
-
-        <article>
-          <p>
-            If you want to get in touch with me about something or just to say hi,
-            reach out on social media or send me an email.
+          <p class="mt-2 max-w-2xl">
+            Selected projects in statistics, machine learning, stochastic modelling,
+            simulation, and quantitative analysis.
           </p>
-        </article>
-
-        <div class="flex flex-wrap items-center gap-4">
-          <Socials />
-
-          <Link href={`mailto:${SITE.EMAIL}`} aria-label={`Email ${SITE.NAME}`}>
-            {SITE.EMAIL}
-          </Link>
         </div>
-      </section>
-    </div>
+
+        <Link href="/projects">
+          See all projects
+        </Link>
+      </div>
+
+      <div class="grid gap-6 sm:grid-cols-2">
+        {projects.map((project) => {
+          const image = projectImages[project.id] ?? "/lighthouse.png";
+
+          return (
+            <a
+              href={`/projects/${project.slug}`}
+              class="group overflow-hidden rounded-3xl border border-black/10 bg-stone-100/40 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-black/30 hover:shadow-xl dark:border-white/10 dark:bg-stone-900/40 dark:hover:border-white/30"
+            >
+              <div class="aspect-[16/10] overflow-hidden border-b border-black/10 dark:border-white/10">
+                <img
+                  src={image}
+                  alt=""
+                  class="h-full w-full object-cover opacity-90 transition-all duration-500 group-hover:scale-105 group-hover:opacity-100"
+                />
+              </div>
+
+              <div class="space-y-3 p-5">
+                <h3 class="text-xl font-semibold text-black dark:text-white">
+                  {project.data.title}
+                </h3>
+
+                <p class="line-clamp-3 text-sm">
+                  {project.data.description}
+                </p>
+
+                <div class="pt-2 text-sm font-medium text-black dark:text-white">
+                  View project →
+                </div>
+              </div>
+            </a>
+          );
+        })}
+      </div>
+    </section>
   </Container>
 </PageLayout>
